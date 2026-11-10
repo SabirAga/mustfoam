@@ -1,0 +1,90 @@
+'use strict';
+// Paste your Formspree endpoint below, e.g. https://formspree.io/f/abcdefgh
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mvkapknq';
+const FORM_CONNECTED = /^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(FORMSPREE_ENDPOINT);
+const copy={
+  en:{
+    navProducts:'Products',navApproach:'Approach',navCompany:'Company',navContact:'Contact',navCta:'Start an inquiry',
+    heroEyebrow:'MATERIALS WITH PURPOSE',heroTitle:'The material<br>behind <em>what’s next.</em>',heroDesc:'Flexible polyurethane foam sheets and practical cleaning sponges. Two focused product lines, built around real applications.',heroExplore:'Explore our products',heroStory:'Discover MustFoam',heroPhotoLabel:'FLEXIBLE POLYURETHANE',heroFootLeft:'BAKU, AZERBAIJAN',heroFootRight:'SCROLL TO EXPLORE',
+    productsKicker:'THE COLLECTION',productsTitle:'A material with<br><em>more possibilities.</em>',productsLead:'From individually sized foam sheets to everyday kitchen essentials, our product range keeps function at its core.',product1Tag:'FLEXIBLE MATERIALS',product1Title:'Foam sheets',product1Desc:'Flexible polyurethane sheets for furniture, upholstery, cushioning, and further conversion.',product1Chip1:'Cut-to-size',product1Chip2:'Multiple applications',product2Tag:'EVERYDAY ESSENTIALS',product2Title:'Dishwashing sponges',product2Desc:'Everyday dual-sided cleaning sponges with a soft foam layer and a practical scouring surface.',product2Chip1:'Dual-sided',product2Chip2:'Everyday use',spongePhotoTag:'KITCHEN / HOME',productsNote:'Purposeful formats. Practical applications.',productsCta:'Discuss your requirements',
+    manifestoTag:'OUR POINT OF VIEW',manifestoTitle:'Good materials.<br>Clear purpose.<br><em>Nothing unnecessary.</em>',manifestoDesc:'We believe the right material and the right format should do exactly what the application needs — and nothing it doesn’t.',manifestoBottom:'FORM / FUNCTION / FOCUS',
+    capKicker:'HOW WE THINK',capTitle:'Considered at<br><em>every stage.</em>',capLead:'From initial dimensions to a finished product format, each step starts with understanding the intended use.',stage1Title:'Understand',stage1Desc:'Start with the application, size, and quantity.',stage2Title:'Shape',stage2Desc:'Choose a practical material and product format.',stage3Title:'Prepare',stage3Desc:'Define the finish and packing requirements.',
+    companyKicker:'ABOUT MUSTFOAM',companyTitle:'A focused company.<br><em>A flexible material.</em>',companyLead:'MustFoam is an Azerbaijan-based business focused on flexible polyurethane foam products for furniture, upholstery, and everyday household use.',companyDetail:'Our product offering is intentionally straightforward: foam sheets and dishwashing sponges. We focus on practical formats and the requirements that matter to customers.',companyVisualTag:'MATERIALS / AZERBAIJAN',companyCta:'Talk to us about your project',
+    contactKicker:'LET’S CONNECT',contactTitle:'Have something<br><em>in mind?</em>',contactLead:'Tell us what you need. Share the product, dimensions, and approximate quantity to prepare an inquiry.',locationTitle:'Baku, Azerbaijan',locationSub:'MustFoam MMC',formEyebrow:'PRODUCT INQUIRY',formName:'Your name',namePlaceholder:'Full name',formEmail:'Email address',formProduct:'Product of interest',chooseProduct:'Select product',bothProducts:'Both product lines',formDetails:'Requirements',detailsPlaceholder:'Dimensions, quantities, intended use...',formButton:'Prepare inquiry',formSend:'Send inquiry',formDisclaimer:'Preview mode: this prepares a message you can copy. No inquiry is sent until a company email is connected.',formSentInfo:'Send your requirements directly to MustFoam. We will contact you by email.',formSending:'Sending your inquiry…',formSent:'Thank you! Your inquiry has been sent successfully.',formSendError:'Your inquiry could not be sent. Please try again later.',messageLabel:'Your prepared inquiry',copyButton:'Copy message',formInvalid:'Please enter your name, a valid email address, and a product.',formReady:'Your inquiry is ready below. It has not been sent.',copySuccess:'Inquiry copied to clipboard.',copyFallback:'Select the text and copy it manually.',
+    footerTag:'Material thinking, made practical.',backTop:'Back to top ↑',footerLocation:'BAKU · AZERBAIJAN',footerPrivacy:'Website concept · Contact details pending',
+    pageTitle:'MustFoam — Materials, considered.',copyProductFoam:'Foam sheets',copyProductSponges:'Dishwashing sponges',copyProductBoth:'Both product lines',copyName:'Name',copyEmail:'Email',copyProduct:'Product',copyDetails:'Requirements'
+  },
+  az:{
+    navProducts:'Məhsullar',navApproach:'Yanaşmamız',navCompany:'Şirkət',navContact:'Əlaqə',navCta:'Sorğu hazırlayın',
+    heroEyebrow:'MƏQSƏDƏ UYĞUN MATERİALLAR',heroTitle:'Gələcəyin ideyaları<br><em>üçün material.</em>',heroDesc:'Elastik poliuretan porolon təbəqələri və gündəlik istifadə üçün qabyuyan süngərlər. Praktik ehtiyaclara uyğun iki məhsul istiqaməti.',heroExplore:'Məhsullarla tanış olun',heroStory:'MustFoam haqqında',heroPhotoLabel:'ELASTİK POLİURETAN',heroFootLeft:'BAKI, AZƏRBAYCAN',heroFootRight:'AŞAĞI KEÇİN',
+    productsKicker:'MƏHSUL ÇEŞİDİ',productsTitle:'Bir material,<br><em>daha çox imkan.</em>',productsLead:'Ölçüyə uyğun porolon təbəqələrindən gündəlik mətbəx məhsullarına qədər, hər məhsulda funksionallığa üstünlük veririk.',product1Tag:'ELASTİK MATERİALLAR',product1Title:'Porolon təbəqələri',product1Desc:'Mebel, yumşaq döşəmə, yastıqlama və əlavə emal üçün elastik poliuretan təbəqələri.',product1Chip1:'Ölçüyə uyğun kəsim',product1Chip2:'Müxtəlif tətbiqlər',product2Tag:'GÜNDƏLİK MƏHSULLAR',product2Title:'Qabyuyan süngərlər',product2Desc:'Yumşaq porolon qatı və təmizləyici səthi olan ikitərəfli qabyuyan süngərlər.',product2Chip1:'İkitərəfli',product2Chip2:'Gündəlik istifadə',spongePhotoTag:'MƏTBƏX / EV',productsNote:'Məqsədəuyğun forma. Praktik istifadə.',productsCta:'Tələblərinizi müzakirə edək',
+    manifestoTag:'BİZİM BAXIŞIMIZ',manifestoTitle:'Düzgün material.<br>Aydın məqsəd.<br><em>Artıq heç nə.</em>',manifestoDesc:'Material və onun forması istifadə məqsədinə tam uyğun olmalıdır — nə az, nə də artıq.',manifestoBottom:'FORMA / FUNKSİYA / FOKUS',
+    capKicker:'YANAŞMAMIZ',capTitle:'Hər mərhələdə<br><em>düşünülmüş həll.</em>',capLead:'İlkin ölçülərdən məhsulun son formasına qədər hər addım istifadə məqsədini anlamaqdan başlayır.',stage1Title:'Anlamaq',stage1Desc:'İstifadə sahəsini, ölçünü və miqdarı müəyyən edirik.',stage2Title:'Formalaşdırmaq',stage2Desc:'Uyğun material və məhsul formatını seçirik.',stage3Title:'Hazırlamaq',stage3Desc:'Tamamlama və qablaşdırma tələblərini müəyyən edirik.',
+    companyKicker:'MUSTFOAM HAQQINDA',companyTitle:'Dəqiq istiqamət.<br><em>Çevik material.</em>',companyLead:'MustFoam Azərbaycanda mebel, yumşaq döşəmə və gündəlik məişət ehtiyacları üçün elastik poliuretan məhsullarına fokuslanan şirkətdir.',companyDetail:'Məhsul təklifimiz məqsədyönlü və sadədir: porolon təbəqələri və qabyuyan süngərlər. Müştəri üçün vacib olan ölçülərə, formatlara və praktik tələblərə diqqət yetiririk.',companyVisualTag:'MATERİALLAR / AZƏRBAYCAN',companyCta:'Layihənizi bizimlə müzakirə edin',
+    contactKicker:'ƏLAQƏ SAXLAYAQ',contactTitle:'Ağlınızda bir<br><em>layihə var?</em>',contactLead:'Nəyə ehtiyacınız olduğunu bildirin. Sorğu hazırlamaq üçün məhsulu, ölçüləri və təxmini miqdarı qeyd edin.',locationTitle:'Bakı, Azərbaycan',locationSub:'MustFoam MMC',formEyebrow:'MƏHSUL SORĞUSU',formName:'Adınız',namePlaceholder:'Ad və soyad',formEmail:'E-poçt ünvanı',formProduct:'Marağınızı çəkən məhsul',chooseProduct:'Məhsul seçin',bothProducts:'Hər iki məhsul',formDetails:'Tələblər',detailsPlaceholder:'Ölçülər, miqdar, istifadə məqsədi...',formButton:'Sorğu hazırlayın',formSend:'Sorğunu göndərin',formDisclaimer:'Önizləmə rejimi: sorğu mətnini kopyalaya bilərsiniz. Şirkət e-poçtu qoşulanadək heç nə göndərilmir.',formSentInfo:'Tələblərinizi birbaşa MustFoam-a göndərin. Sizinlə e-poçt vasitəsilə əlaqə saxlayacağıq.',formSending:'Sorğunuz göndərilir…',formSent:'Təşəkkür edirik! Sorğunuz uğurla göndərildi.',formSendError:'Sorğunuzu göndərmək mümkün olmadı. Zəhmət olmasa, yenidən cəhd edin.',messageLabel:'Hazırlanmış sorğunuz',copyButton:'Mətni kopyalayın',formInvalid:'Adınızı, düzgün e-poçt ünvanını və məhsulu qeyd edin.',formReady:'Sorğu aşağıda hazırdır. Hələ göndərilməyib.',copySuccess:'Sorğu mətni kopyalandı.',copyFallback:'Mətni seçin və əl ilə kopyalayın.',
+    footerTag:'Praktik həllər üçün materiallar.',backTop:'Yuxarı qayıdın ↑',backTopText:'Yuxarı qayıdın',footerLocation:'BAKI · AZƏRBAYCAN',footerPrivacy:'Sayt konsepti · Əlaqə məlumatları əlavə olunacaq',
+    pageTitle:'MustFoam — Məqsədəuyğun materiallar.',copyProductFoam:'Porolon təbəqələri',copyProductSponges:'Qabyuyan süngərlər',copyProductBoth:'Hər iki məhsul',copyName:'Ad',copyEmail:'E-poçt',copyProduct:'Məhsul',copyDetails:'Tələblər'
+  },
+  ru:{
+    navProducts:'Продукция',navApproach:'Подход',navCompany:'Компания',navContact:'Контакты',navCta:'Подготовить запрос',
+    heroEyebrow:'МАТЕРИАЛЫ С НАЗНАЧЕНИЕМ',heroTitle:'Материал для<br><em>новых возможностей.</em>',heroDesc:'Листы эластичного пенополиуретана и практичные губки для мытья посуды. Два направления продукции для реальных задач.',heroExplore:'Смотреть продукцию',heroStory:'О компании MustFoam',heroPhotoLabel:'ЭЛАСТИЧНЫЙ ПЕНОПОЛИУРЕТАН',heroFootLeft:'БАКУ, АЗЕРБАЙДЖАН',heroFootRight:'ЛИСТАЙТЕ ВНИЗ',
+    productsKicker:'АССОРТИМЕНТ',productsTitle:'Один материал.<br><em>Больше возможностей.</em>',productsLead:'От листового поролона по заданным размерам до повседневных товаров для кухни — мы ставим функциональность на первое место.',product1Tag:'ЭЛАСТИЧНЫЕ МАТЕРИАЛЫ',product1Title:'Листовой поролон',product1Desc:'Листы эластичного пенополиуретана для мебели, обивки, амортизации и дальнейшей обработки.',product1Chip1:'Нарезка по размеру',product1Chip2:'Разные применения',product2Tag:'ТОВАРЫ НА КАЖДЫЙ ДЕНЬ',product2Title:'Губки для мытья посуды',product2Desc:'Двусторонние губки с мягким поролоновым слоем и практичной абразивной поверхностью.',product2Chip1:'Две стороны',product2Chip2:'Повседневное применение',spongePhotoTag:'КУХНЯ / ДОМ',productsNote:'Продуманные форматы. Практичное применение.',productsCta:'Обсудить ваши требования',
+    manifestoTag:'НАШ ВЗГЛЯД',manifestoTitle:'Правильный материал.<br>Ясная цель.<br><em>Ничего лишнего.</em>',manifestoDesc:'Материал и формат изделия должны отвечать задаче — без ненужной сложности.',manifestoBottom:'ФОРМА / ФУНКЦИЯ / ФОКУС',
+    capKicker:'НАШ ПОДХОД',capTitle:'Внимание<br><em>к каждому этапу.</em>',capLead:'От начальных размеров до готового формата изделия каждый шаг начинается с понимания его назначения.',stage1Title:'Изучить',stage1Desc:'Уточнить применение, размеры и количество.',stage2Title:'Сформировать',stage2Desc:'Выбрать практичный материал и формат изделия.',stage3Title:'Подготовить',stage3Desc:'Определить требования к отделке и упаковке.',
+    companyKicker:'О КОМПАНИИ',companyTitle:'Точный фокус.<br><em>Гибкий материал.</em>',companyLead:'MustFoam — компания из Азербайджана, работающая в сфере изделий из эластичного пенополиуретана для мебели, обивки и повседневного домашнего использования.',companyDetail:'Наш ассортимент намеренно лаконичен: листовой поролон и губки для мытья посуды. Мы уделяем внимание практичным форматам и реальным требованиям клиентов.',companyVisualTag:'МАТЕРИАЛЫ / АЗЕРБАЙДЖАН',companyCta:'Обсудить ваш проект',
+    contactKicker:'БУДЕМ НА СВЯЗИ',contactTitle:'Есть задача<br><em>или идея?</em>',contactLead:'Расскажите, что вам нужно. Укажите продукт, размеры и приблизительный объём, чтобы подготовить запрос.',locationTitle:'Баку, Азербайджан',locationSub:'MustFoam MMC',formEyebrow:'ЗАПРОС НА ПРОДУКЦИЮ',formName:'Ваше имя',namePlaceholder:'Имя и фамилия',formEmail:'Электронная почта',formProduct:'Интересующий продукт',chooseProduct:'Выберите продукт',bothProducts:'Оба направления',formDetails:'Требования',detailsPlaceholder:'Размеры, количество, применение...',formButton:'Подготовить запрос',formSend:'Отправить запрос',formDisclaimer:'Режим предпросмотра: можно скопировать подготовленный текст. До подключения рабочей почты ничего не отправляется.',formSentInfo:'Отправьте требования напрямую в MustFoam. Мы свяжемся с вами по электронной почте.',formSending:'Отправка запроса…',formSent:'Спасибо! Ваш запрос успешно отправлен.',formSendError:'Не удалось отправить запрос. Пожалуйста, попробуйте позже.',messageLabel:'Подготовленный запрос',copyButton:'Скопировать текст',formInvalid:'Укажите имя, действующий email и интересующий продукт.',formReady:'Текст запроса готов ниже. Он ещё не отправлен.',copySuccess:'Текст запроса скопирован.',copyFallback:'Выделите и скопируйте текст вручную.',
+    footerTag:'Материалы для практичных решений.',backTop:'Наверх ↑',backTopText:'Наверх',footerLocation:'БАКУ · АЗЕРБАЙДЖАН',footerPrivacy:'Концепция сайта · Контакты будут добавлены',
+    pageTitle:'MustFoam — Материалы с назначением.',copyProductFoam:'Листовой поролон',copyProductSponges:'Губки для мытья посуды',copyProductBoth:'Оба направления',copyName:'Имя',copyEmail:'Email',copyProduct:'Продукт',copyDetails:'Требования'
+  }
+};
+let activeLanguage='az';
+function translate(lang){
+  if(!copy[lang])return;
+  activeLanguage=lang;document.documentElement.lang=lang;document.title=copy[lang].pageTitle;
+  document.querySelectorAll('[data-i18n]').forEach(node=>{const val=copy[lang][node.dataset.i18n];if(val!==undefined)node.textContent=val;});
+  document.querySelectorAll('[data-i18n-html]').forEach(node=>{const val=copy[lang][node.dataset.i18nHtml];if(val!==undefined)node.innerHTML=val;});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(node=>{const val=copy[lang][node.dataset.i18nPlaceholder];if(val!==undefined)node.placeholder=val;});
+  document.querySelectorAll('[data-lang]').forEach(btn=>{const on=btn.dataset.lang===lang;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
+  document.getElementById('form-status').textContent='';
+  const sendLabel=document.querySelector('#inquiry-form [data-i18n="formButton"]');
+  if(FORM_CONNECTED){sendLabel.textContent=copy[lang].formSend;document.querySelector('#inquiry-form .form-disclaimer').textContent=copy[lang].formSentInfo;}
+}
+translate('az');
+document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>translate(button.dataset.lang)));
+const menu=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');
+function closeMenu(){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open');}
+menu.addEventListener('click',()=>{const next=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(next));nav.classList.toggle('is-open',next);document.body.classList.toggle('menu-open',next);});
+nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();});
+window.addEventListener('resize',()=>{if(window.innerWidth>900)closeMenu();});
+document.getElementById('year').textContent=String(new Date().getFullYear());
+const form=document.getElementById('inquiry-form');const messageOutput=document.getElementById('inquiry-output');const prepared=document.getElementById('prepared-message');const status=document.getElementById('form-status');
+document.querySelectorAll('[data-product]').forEach(el=>el.addEventListener('click',()=>{form.elements.product.value=el.dataset.product;}));
+form.addEventListener('submit',async event=>{
+  event.preventDefault();const name=form.elements.name.value.trim(),email=form.elements.email.value.trim(),product=form.elements.product.value,details=form.elements.details.value.trim();const tr=copy[activeLanguage];
+  if(!name||!email||!form.elements.email.checkValidity()||!product){status.textContent=tr.formInvalid;prepared.hidden=true;return;}
+  if(FORM_CONNECTED){
+    const button=form.querySelector('button[type="submit"]');
+    const label=button.querySelector('[data-i18n="formButton"]');
+    button.disabled=true;label.textContent=tr.formSending;status.textContent=tr.formSending;prepared.hidden=true;
+    const fields=new FormData(form);
+    fields.set('_subject','MustFoam website inquiry');
+    fields.set('language',activeLanguage.toUpperCase());
+    try{
+      const response=await fetch(FORMSPREE_ENDPOINT,{method:'POST',body:fields,headers:{Accept:'application/json'}});
+      if(!response.ok)throw new Error('Form submission failed');
+      form.reset();status.textContent=tr.formSent;
+    }catch(error){status.textContent=tr.formSendError;}
+    finally{button.disabled=false;label.textContent=tr.formSend;}
+    return;
+  }
+  const prodName=product==='foam'?tr.copyProductFoam:product==='sponges'?tr.copyProductSponges:tr.copyProductBoth;
+  messageOutput.value=`MustFoam — ${tr.formEyebrow}\n\n${tr.copyName}: ${name}\n${tr.copyEmail}: ${email}\n${tr.copyProduct}: ${prodName}\n\n${tr.copyDetails}:\n${details||'—'}`;
+  prepared.hidden=false;status.textContent=tr.formReady;prepared.scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+});
+document.getElementById('copy-message').addEventListener('click',async()=>{
+  const tr=copy[activeLanguage];let success=false;
+  if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(messageOutput.value);success=true;}catch(e){}}
+  if(!success){messageOutput.focus();messageOutput.select();try{success=document.execCommand('copy');}catch(e){}}
+  status.textContent=success?tr.copySuccess:tr.copyFallback;
+});
